@@ -61,4 +61,20 @@ class TrainersControllerTest < ActionController::TestCase
     assert_not_nil external_resource
     assert_equal external_resource.url, json_event['mentions'].first['url']
   end
+
+  test "should show bip-scholar embed div when trainers feature is enabled" do
+    with_settings(feature: { trainers: true }) do
+      get :show, params: { id: @trainer }
+      assert_response :success
+      assert_select 'div.bip-scholar-embed[data-orcid="' + @trainer.orcid + '"]'
+    end
+  end
+
+  test "should not show bip-scholar embed div when trainers feature is disabled" do
+    with_settings(feature: { trainers: false }) do
+      assert_raises ActionController::RoutingError do
+        get :show, params: { id: @trainer }
+      end
+    end
+  end
 end

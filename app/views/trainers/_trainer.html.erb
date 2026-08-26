@@ -1,5 +1,5 @@
 <li class="masonry-brick media-item long">
-  <%= link_to trainer_path(trainer), class: 'link-overlay' do %>
+  <%= link_to trainer_path(trainer), class: 'link-overlay', data: { turbo: false, turbolinks: false } do %>
     <%= image_tag trainer.user.avatar_url, class: 'small-avatar pull-right' %>
 
     <h4><%= trainer.full_name %></h4>

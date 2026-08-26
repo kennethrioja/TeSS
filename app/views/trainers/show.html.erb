@@ -23,6 +23,9 @@
       <div class="url-wrap">
         <%= orcid_link(@trainer, class: 'h5', track: true) %>
       </div>
+
+      <!-- BIP!Scholar Profile -->
+      <div class="bip-scholar-embed" data-orcid=<%= @trainer.orcid %>></div>
     <% end %>
 
     <!-- Field:  description -->
