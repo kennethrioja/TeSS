@@ -25,7 +25,7 @@
       </div>
 
       <!-- BIP!Scholar Profile -->
-      <div class="bip-scholar-embed" data-orcid=<%= @trainer.orcid %>></div>
+      <%= render 'common/bip_scholar_infographics', orcid: @trainer.orcid, layout: 'default', empty_mode: 'default' %>
     <% end %>
 
     <!-- Field:  description -->

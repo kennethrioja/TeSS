@@ -34,8 +34,4 @@
   <% end %>
 
   <%= yield :extra_head if content_for? :extra_head %>
-
-  <% if TeSS::Config.feature['trainers'] %>
-    <script src="https://cdn.jsdelivr.net/gh/athenarc/bip-plugin@main/embed.min.js"></script>
-  <% end %>
 </head>
