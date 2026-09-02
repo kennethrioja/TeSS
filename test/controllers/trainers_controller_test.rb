@@ -88,15 +88,23 @@ class TrainersControllerTest < ActionController::TestCase
   end
 
   test 'should show bip-scholar embed in compact layout' do
-    BipScholarHelper.stub :fetch_score, nil do
-      # Simulates passing empty_mode: 'silent' in view partial render
+    fake_data = {
+      'work_types_num' => [12, 3, 4, 1],
+      'citations_num' => 5,
+      'popular_works_count' => 1,
+      'influential_works_count' => 2,
+      'h_index' => 3,
+      'academic_age' => 10,
+      'openness' => { 'open_percentage' => 80 }
+    }
+    BipScholarHelper.stub :fetch_score, fake_data do
       html = @controller.render_to_string(
-            partial: 'common/bip_scholar_infographics',
-            locals: { orcid: @trainer.orcid, layout: 'compact', empty_mode: 'default' }
-          )
+        partial: 'common/bip_scholar_infographics',
+        locals: { orcid: @trainer.orcid, layout: 'compact', empty_mode: 'default' }
+      )
       doc = Nokogiri::HTML(html)
 
-      assert_equal 0, doc.css('a.bip-scholar-badge.bip-scholar-badge--compact').size
+      assert_equal 1, doc.css('a.bip-scholar-badge.bip-scholar-badge--compact').size
     end
   end
 

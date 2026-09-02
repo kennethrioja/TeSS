@@ -1,11 +1,13 @@
 module BipScholarHelper
   require 'net/http'
+  require 'cgi'
+  require 'json'
 
   def self.fetch_score(orcid)
     return nil if orcid.blank?
 
     # Cache in Redis for 24 hours to prevent blocking TeSS web threads
-    Rails.cache.fetch("bip_scholar_score_#{orcid}", expires_in: 24.hours) do
+    Rails.cache.fetch("bip_scholar_score_#{orcid}", expires_in: 24.hours, skip_nil: true) do # `skip_nil: true` to avoid caching nil and then make the widget disappear
       uri = URI("https://bip-api.imsi.athenarc.gr/scholar/scores/#{CGI.escape(orcid)}")
       
       # Use timeout to prevent hanging connections

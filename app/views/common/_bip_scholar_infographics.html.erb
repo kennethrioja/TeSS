@@ -5,11 +5,11 @@
   empty_mode = local_assigns.fetch(:empty_mode, 'default') # empty_mode hides BIP!Scholar widget if no ORCID on BIP!Scholar is found
 %>
 
-<div class="bip-scholar-embed" data-orcid="<%= orcid %>">
+<div class="bip-scholar-embed" data-orcid="<%= orcid %>" <%= 'hidden' if data.nil? && empty_mode == 'silent' %>>
   <% if data.nil? %>
     <% unless empty_mode == 'silent' %>
       <div class="bip-scholar-no-profile">
-        <i class="fa fa-circle-info"></i>
+        <i class="fa fa-circle-info" aria-hidden="true"></i>
         No BIP! Scholar profile found for this ORCID.
         <%= link_to "Learn more ↗", "https://bip.imsi.athenarc.gr/scholar", target: "_blank", rel: "noopener" %>
       </div>
@@ -43,7 +43,10 @@
       <% stats.each do |stat| %>
         <div class="bip-scholar-stat <%= 'bip-scholar-stat--group-sep' if stat[:sep] %>" title="<%= stat[:label] %>">
           <span class="bip-scholar-stat-value">
-            <i class="fa fa-<%= stat[:icon] %> bip-scholar-stat-icon"></i>
+            <i class="fa fa-<%= stat[:icon] %> bip-scholar-stat-icon" aria-hidden="true"></i>
+            <% if is_compact %>
+              <span class="sr-only"><%= stat[:label] %>: </span>
+            <% end %>
             <%= stat[:value] %>
           </span>
           <% unless is_compact %>
